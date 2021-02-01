@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css" />
+        <script
+            class="jsbin"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
+        ></script>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+        />
+    </head>
+    
+    <body>
+        <div class="background-image"></div>
+        <nav class="nav-bar">
+            <a href="#" class="logo"> <span class="logo-text"> Dog Face </span></a>
+            <ul class="nav-menu">
+                <li class="nav-list"><a href="index.html" class="other-page">강아지 관상으로 전생보기</a></li>
+                <li class="nav-list"><a href="previous.html" class="other-page">강아지 관상으로 성격보기</a></li>
+            </ul>
+            <a href="#" class="navbar__toogleBtn">
+                <i class="fas fa-bars"></i>
+            </a>
+        </nav>
+
+        <div class="container">
+            <!-- <div>Teachable Machine Image Model</div>
+                <button type="button" onclick="init()">Start</button>
+                <button type="button" onclick="predict()">predict</button> -->
+            <div class="title-text">
+                <h1>
+                    개관상 전생
+                </h1>
+                <p>
+                    개관상 선생이 알려주는 우지집 댕댕이 전생
+                </p>
+            </div>
+            <section class="frame-container">
+                <div class="frame">
+                    <div class="file-upload">
+                        <div class="image-upload-wrap">
+                            <input
+                                class="file-upload-input"
+                                type="file"
+                                onchange="readURL(this);"
+                                accept="image/*"
+                            />
+                            <div class="drag-text">
+                                <p>
+                                    클릭 후 사진 업로드
+                                </p>
+                                <img src="photo-icon.png" class="photo-icon" />
+                            </div>
+                        </div>
+                        <div class="file-upload-content">
+                            <div class="img-flexbox">
+                                <img
+                                    class="file-upload-image"
+                                    id="face-image"
+                                    src="#"
+                                    alt="your image"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div id="webcam-container"></div> -->
+                </div>
+            </section>
+
+            <div class="loading" id="loading">
+                <p class="loading-text">
+                    분석중입니다...
+                </p>
+            </div>
+            <p class="tt" id="tt">- 사용자의 사진은 어디에도 저장되지 않습니다. -</p>
+            <section class="result-container">
+                <div id="label-container" class="result-text"></div>
+                <div id="result-m-text" class="result-m-text"></div>
+                <div id="result-text" class="result-sub-text"></div>
+                <button
+                    class="file-upload-btn"
+                    id="reload-btn"
+                    type="button"
+                    onclick="window.location.reload()"
+                >
+                    다른 사진도 해보기
+                </button>
+
+                <button class="btn-go" id="btn-go" type="button" onclick="location.href='previous.html'">
+                    개관상 으로 성격 알아보기
+                </button>
+            </section>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+        <script type="text/javascript">
+            const toogleBtn = document.querySelector('.navbar__toogleBtn');
+            const navMenu = document.querySelector('.nav-menu');
+            toogleBtn.addEventListener('click',()=>{
+                navMenu.classList.toggle('active');
+                console.log("object");
+            });
+            // More API functions here:
+            // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+            // the link to your model provided by Teachable Machine export panel
+
+            const URL = "https://teachablemachine.withgoogle.com/models/8rnVpee07/";
+
+            let model, webcam, labelContainer, maxPredictions, resultText, loding, reloadBtn, tt, pageGo, resultMText;
+
+            // Load the image model and setup the webcam
+            async function init() {
+                const modelURL = URL + 'model.json';
+                const metadataURL = URL + 'metadata.json';
+
+                // load the model and metadata
+                // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+                // or files from your local hard drive
+                // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+                model = await tmImage.load(modelURL, metadataURL);
+                maxPredictions = model.getTotalClasses();
+                labelContainer = document.getElementById('label-container');
+                resultText = document.getElementById('result-text');
+                resultMText = document.getElementById('result-m-text');
+                labelContainer.appendChild(document.createElement('div'));
+                resultText.appendChild(document.createElement('div'));
+                resultMText.appendChild(document.createElement('div'));
+                // for (let i = 0; i < maxPredictions; i++) {
+                //     // and class labels
+                //     labelContainer.appendChild(document.createElement('div'));
+                // }
+            }
+
+            // run the webcam image through the image model
+            async function predict() {
+                // predict can take in an image, video or canvas html element
+                var image = document.getElementById('face-image');
+                const prediction = await model.predict(image, false);
+                prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+                console.log(prediction[0].className);
+                console.log(prediction[0].probability);
+                var resultNum = Number(prediction[0].probability) * 100;
+                resultNum = resultNum.toFixed();
+                console.log(resultNum);
+
+                    switch (prediction[0].className) {
+                        case '1':
+                            labelContainer.childNodes[0].innerHTML = '- 왕 -';
+                            resultMText.childNodes[0].innerHTML = '[ 나는 왕이로소이다. ]';
+                            resultText.childNodes[0].innerHTML =
+                                '- 모든게 자기 뜻대로 되야하며, 높을곳에 올라가 있는걸 좋아해요.<br>- 자기주장이 강하고 소유욕이 많으며 질투심이 강해요.<br>- 대, 소변을 잘 가리지만 기분이 조금만 언짢으면 보란듯이 실수를 저질러요.';
+                            break;
+                        case '2':
+                            labelContainer.childNodes[0].innerHTML = '- 기생 -';
+                            resultMText.childNodes[0].innerHTML = '[ 똥꼬발랄 분위기메이커 ]';
+                            resultText.childNodes[0].innerHTML =
+                                '- 오늘만 사는 마이웨이로 놀이에 한번 빠지면 끝이 없어요.<br>- 피곤해도 노는 것 만큼은 포기못해요.<br>- 관종으로 평범하게 놀지 않아요. 가끔 보면 미친아이같아요.<br>- 자기얼굴에 취해있으며, 선입견 없이 누구와도 잘 어울려요.';
+                            break;
+                        case '3':
+                            labelContainer.childNodes[0].innerHTML = '- 내시 -';
+                            resultMText.childNodes[0].innerHTML = '[ 감수성 풍부, 낮가림 끝판왕 ]';
+                            resultText.childNodes[0].innerHTML =
+                                '- 감수성이 풍부하며 보호자의 희로애락을 민감하게 알아차리고 맞춰주는 영리함을 가지고 있어요.<br>- 새로운 친구를 만나는걸 힘들어해요.<br>- 친해지면 장난도 많이치고 정도 많이주는 아이에요.<br>- 누군가에게 칭찬을 받으면 꿈에서 생각날 정도로 하루 온종일 생각해요.';
+                            break;
+                        case '4':
+                            labelContainer.childNodes[0].innerHTML = '- 양반 -';
+                            resultMText.childNodes[0].innerHTML = '[ 내편 말곤 다 경계근무중 ]';
+                            resultText.childNodes[0].innerHTML =
+                                '- 경계심이 많아 내 사람이 아니라면 얄짤없이 경계해요.<br>- 내 사람이라고 인식되면 상냥하고 애정이 많은 아이에요.<br>- 식탐이 많아 운동을 게을리하면 비만이 되기 쉬워요.<br>- 욕심이 많고, 소유하고자 하는 것은 꼭 가져야해요.';
+                            break;
+                        case '5':
+                            labelContainer.childNodes[0].innerHTML = '- 노비 -';
+                            resultMText.childNodes[0].innerHTML = '[ 관종아닌 관종같은 나 ]';
+                            resultText.childNodes[0].innerHTML =
+                                '- 충성심이 많고, 관심을 받고싶어 항상 노력해요. 노력이 다소 소란스러울수도 있어요.<br>- 칭찬받는걸 좋아하지만 내색하지 않아요.<br>- 낙천적이고 긍정적이며 공감능력이 좋아요.<br>- 보호자가 "나를 싫어할까??" 항상 걱정해요.';
+                            break;
+                        case '6':
+                            labelContainer.childNodes[0].innerHTML = '- 망나니 -';
+                            resultMText.childNodes[0].innerHTML = '[ 노는게 제일 좋아~ ]';
+                            resultText.childNodes[0].innerHTML =
+                                '- 완전 기분파에요. 즉흥적으로 행동하는걸 좋아해요.<br>- 집안을 막 어지럽히고 숨어있는걸 좋아해요.<br>- 꿈에서 "내일은 뭐하고 놀지??" 생각하면서 잠을 자요.<br>- 눈치가 빨라서 혼나는걸 인지하고 반성한척 해요, 잠잠해지면 바로 사고쳐요.';
+                            break;
+                        case '7':
+                            labelContainer.childNodes[0].innerHTML = '- 발명가 -';
+                            resultMText.childNodes[0].innerHTML = '[ 어쩌다보니 내가 이걸? ]';
+                            resultText.childNodes[0].innerHTML =
+                                '- 호기심이 많아 자기도 모르게 어느순간 보면 난장판이 되어있어요.<br>- 난장판된 모습을 보면 "어... 어떻하지?" 가 아닌 "내가 이렇게 재밌게 놀았어?" 생각하며 뿌듯해해요.<br>- 궁금한걸 참지못해요. 바로바로 냄새맞고 먹어봐야해요.';
+                            break;
+                        case '8':
+                            labelContainer.childNodes[0].innerHTML = '- 무사 -';
+                            resultMText.childNodes[0].innerHTML = '[ 무섭지만 용감한 척 ]';
+                            resultText.childNodes[0].innerHTML =
+                                '- 겁이 생각보다 많지만 내색하지않고 용감한 척 해요.<br>- 자기자신이 강한줄 착각하고 있어요.<br>- 상대방은 신경도 안쓰는데 자기가 쫒아낸줄 알고 혼자 뿌듯해해요.<br>- 현실에선 싸움을 피하지만 꿈에선 영웅놀이를 하고 있어요.';
+                            break;
+                        case '9':
+                            labelContainer.childNodes[0].innerHTML = '- 광대 -';
+                            resultMText.childNodes[0].innerHTML = '[ 내가 웃는게 웃는게 아니야 ]';
+                            resultText.childNodes[0].innerHTML =
+                                '- 멍충멍충해서 보는이는 귀여운데 자기자신은 항상 심각해요.<br>- 완벽한 계산으로 움직인다고 생각하지만 몸이 따라주질 못해 몸개그를 자주해요.<br>- 자기자신이 멍충하고, 웃기단걸 자기자신만 몰라요.';
+                            break;
+                        case '10':
+                            labelContainer.childNodes[0].innerHTML = '- 선비 -';
+                            resultMText.childNodes[0].innerHTML = '[ 진지충... , 잘삐짐 ]';
+                            resultText.childNodes[0].innerHTML =
+                                '- 인내심이 강하고 온순하며 낙천적이고 활동적이에요.<br>- 머리가 좋고 평화주의자에요.<br>- 잘삐져요. 낙천적이며 긍정적이긴 한데 속이 좁아요.<br>- 외로움을 많이타서 어리광이 많아요.';
+                            break; 
+                        case '11':
+                            labelContainer.childNodes[0].innerHTML = '- 고양이 아닌가요? -';
+                            resultText.childNodes[0].innerHTML =
+                                '강아지 보단 고양이로 보이는 관상입니다. 다른사진으로 테스트 해주세요.';
+                            break;
+                        case '12':
+                            labelContainer.childNodes[0].innerHTML = '- 사람 아닌가요? -';
+                            resultText.childNodes[0].innerHTML =
+                                '강아지 보단 사람으로 보이는 관상입니다. 다른사진으로 테스트 해주세요.';
+                            break;
+                        case '13':
+                            labelContainer.childNodes[0].innerHTML = '- 뭘까요? -';
+                            resultText.childNodes[0].innerHTML =
+                                '강아지 관상이 아닌거 같습니다. 다른사진으로 테스트 해주세요.';
+                            break;
+                    }
+                // for (let i = 0; i < maxPredictions; i++) {
+                //     const classPrediction =
+                //         prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
+                //     labelContainer.childNodes[i].innerHTML = classPrediction;
+                // }
+            }
+
+            function readURL(input) {
+                loading = document.getElementById('loading');
+                reloadBtn = document.getElementById('reload-btn');
+                pageGo = document.getElementById('btn-go');
+                tt = document.getElementById('tt');
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.image-upload-wrap').hide();
+
+                        $('.file-upload-image').attr('src', e.target.result);
+                        $('.file-upload-content').show();
+
+                        $('.image-title').html(input.files[0].name);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                    loading.style.display = 'block';
+                    init().then(() => {
+                        predict();
+                        tt.style.display = 'none';
+                        loading.style.display = 'none';
+                        reloadBtn.style.display = 'block';
+                        pageGo.style.display = 'block';
+                    });
+                    //
+                } else {
+                    removeUpload();
+                }
+            }
+
+            function removeUpload() {
+                $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+                $('.file-upload-content').hide();
+                $('.image-upload-wrap').show();
+            }
+            $('.image-upload-wrap').bind('dragover', function () {
+                $('.image-upload-wrap').addClass('image-dropping');
+            });
+            $('.image-upload-wrap').bind('dragleave', function () {
+                $('.image-upload-wrap').removeClass('image-dropping');
+            });
+        </script>
+    </body>
+    <!-- Copyright (c) 2021 by Aaron Vanston (https://codepen.io/aaronvanston/pen/yNYOXR)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. -->
+</html>
