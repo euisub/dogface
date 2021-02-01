@@ -146,20 +146,9 @@
 
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
-        <script type="text/javascript">
+        <script>
             const toogleBtn = document.querySelector('.navbar__toogleBtn');
             const navMenu = document.querySelector('.nav-menu');
-            toogleBtn.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-                console.log('object');
-            });
-            // More API functions here:
-            // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
-
-            // the link to your model provided by Teachable Machine export panel
-
-            const URL = 'https://teachablemachine.withgoogle.com/models/8rnVpee07/';
-
             let model,
                 webcam,
                 labelContainer,
@@ -170,9 +159,11 @@
                 tt,
                 pageGo,
                 resultMText;
+            toogleBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                console.log('object');
+            });
 
-            
-            
             function readURL(input) {
                 loading = document.getElementById('loading');
                 reloadBtn = document.getElementById('reload-btn');
@@ -216,7 +207,15 @@
             $('.image-upload-wrap').bind('dragleave', function () {
                 $('.image-upload-wrap').removeClass('image-dropping');
             });
-            
+        </script>
+        <script type="text/javascript">
+            // More API functions here:
+            // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+            // the link to your model provided by Teachable Machine export panel
+
+            const URL = 'https://teachablemachine.withgoogle.com/models/8rnVpee07/';
+
             // Load the image model and setup the webcam
             async function init() {
                 const modelURL = URL + 'model.json';
@@ -335,7 +334,6 @@
                 //     labelContainer.childNodes[i].innerHTML = classPrediction;
                 // }
             }
-
         </script>
     </body>
     <!-- Copyright (c) 2021 by Aaron Vanston (https://codepen.io/aaronvanston/pen/yNYOXR)
