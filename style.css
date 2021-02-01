@@ -233,12 +233,13 @@ ul {
   outline: none;
   opacity: 0;
   cursor: pointer;
+  z-index: 10;
 }
 
 .image-upload-wrap {
   height: 390px;
   position: relative;
-  z-index: 10;
+  
 }
 
 .image-dropping,
