@@ -96,12 +96,13 @@
                                 type="file"
                                 onchange="readURL(this);"
                                 accept="image/*"
+                                   alt="image-input"
                             />
                             <div class="drag-text">
                                 <p>
                                     클릭 후 사진 업로드
                                 </p>
-                                <img src="photo-icon.png" class="photo-icon" />
+                                <img src="photo-icon.png" class="photo-icon" alt="upload-icon"/>
                             </div>
                         </div>
                         <div class="file-upload-content">
@@ -128,23 +129,21 @@
             <section class="result-container">
                 <div id="label-container" class="result-text"></div>
                 <div id="result-text" class="result-sub-text"></div>
-                <button
+                <a
                     class="file-upload-btn"
                     id="reload-btn"
-                    type="button"
-                    onclick="window.location.reload()"
+                    href="previous.html"
                 >
                     다른 사진도 해보기
-                </button>
+                </a>
 
-                <button
+                <a
                     class="btn-go"
                     id="btn-go"
-                    type="button"
-                    onclick="location.href='index.html'"
+                    href="index.html"
                 >
                     개관상 으로 전생 알아보기
-                </button>
+                </a>
             </section>
         </div>
 
@@ -257,11 +256,6 @@
                 resultNum = resultNum.toFixed();
                 console.log(resultNum);
 
-                if (resultNum < 70) {
-                    labelContainer.childNodes[0].innerHTML = '- 뭘까요? -';
-                    resultText.childNodes[0].innerHTML =
-                        '강아지 관상이 아닌거 같습니다. 얼굴이 잘 보이는 다른사진으로 테스트 해주세요.';
-                } else {
                     switch (prediction[0].className) {
                         case '1':
                             labelContainer.childNodes[0].innerHTML = '- 질투쟁이 -';
@@ -447,7 +441,6 @@
                 //         prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
                 //     labelContainer.childNodes[i].innerHTML = classPrediction;
                 // }
-            }
 
             
         </script>
