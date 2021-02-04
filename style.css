@@ -26,6 +26,10 @@ ul {
   padding: 0;
 }
 
+.kakao-{
+    margin-top: 20px;
+}
+
 .nav-menu {
   height: 100px;
   display: none;
@@ -288,7 +292,7 @@ ul {
   text-align: center;
   margin: 0 auto;
   padding: 0;
-  top: 75%;
+  top: 57%;
   align-self: center;
   animation-duration: 1s;
   animation-name: slidein;
