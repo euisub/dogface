@@ -1,4 +1,4 @@
 User-agent: *
 Allow:/
-rel="nofollow"
+
 Sitemap:https://dogfacetest.netlify.app/sitemap.xml
