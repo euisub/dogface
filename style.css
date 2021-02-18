@@ -2,11 +2,12 @@ body {
   /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
   font-family: "Yeon Sung", cursive;
   font-size: 16px;
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
   /* overflow: hidden; */
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  background-color:#F9F2E6;
 }
 
 img {
@@ -33,34 +34,32 @@ ul {
     align-items:center;
     text-align:center;
     margin-top: 20px;
+    margin-bottom: 100px;
 }
 
 .kakao- ins{
     padding: 5px;
 }
-.nav-menu {
-  height: 100px;
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.nav-menu.active {
-  display: flex;
-}
 
 .navbar__toogleBtn {
   position: absolute;
   top: 0;
+  width: 60px;
+  height: 60px;
   right: 32px;
   padding: 20px;
+  display: none;
   /* border: 1px solid black; */
+}
+
+.navbar_icon_active{
+    display:block;
 }
 
 .logo-text {
   font-size: 2rem;
-  padding: 20px;
+  padding: 1em;
+  text-align: left;
   /* border: 1px solid black; */
 }
 .nav-list {
@@ -101,8 +100,25 @@ ul {
 
 .nav-bar {
   width: 100%;
-  position: relative;
-  justify-content: space-between;
+  display: flex;
+justify-content: center;
+    align-items: center;
+  padding: 1em;
+    font-family: 'Jua', sans-serif;
+}
+
+.ul-content{
+    display: flex;
+}
+
+.ul-content >li{
+    box-sizing: none;
+    padding: 1em;
+    border: 1px solid #F9F2E6;
+}
+
+.ul-content >li:hover{
+    border: 1px solid black;
 }
 
 .container {
@@ -300,13 +316,14 @@ ul {
   text-align: center;
   margin: 0 auto;
   padding: 0;
-  top: 43%;
+  top: 30.5%;
   align-self: center;
   animation-duration: 1s;
   animation-name: slidein;
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
+
 
 @keyframes slidein {
   from {
@@ -350,4 +367,11 @@ ul {
     text-align: left;
     font-size: 1.2rem;
   }
+    
+    .ul-content{
+        display: none;
+    }
+
+    
+    
 }
