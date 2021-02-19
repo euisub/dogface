@@ -113,11 +113,14 @@ justify-content: center;
 
 .ul-content >li{
     box-sizing: none;
+    
+}
+
+.ul-content >li >a{
     padding: 1em;
     border: 1px solid #F9F2E6;
 }
-
-.ul-content >li:hover{
+.ul-content >li>a:hover{
     border: 1px solid black;
 }
 
