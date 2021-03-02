@@ -77,21 +77,35 @@
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
         ></script>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8YE0KH755"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'G-K8YE0KH755');
+        </script>
     </head>
 
     <body>
         <!-- <div class="background-image"></div> -->
         <nav class="nav-bar">
-            <a href="https://whoareyou-me.tistory.com/" class="logo"> <span class="logo-text"> 테스트 Click </span></a>
+            <a href="https://whoareyou-me.tistory.com/" class="logo">
+                <span class="logo-text"> 테스트 Click </span></a
+            >
             <ul class="ul-content">
-                <li> <a href="https://funface.netlify.app/">개관상 성격</a></li>
+                <li><a href="https://funface.netlify.app/">개관상 성격</a></li>
                 <li><a href="https://dogfacetest.netlify.app/">개관상 전생</a></li>
-                <li> <a href="https://namelove.netlify.app/">이름궁합</a></li>
-                <li> <a href="https://lottolotto.netlify.app/">꿈해몽.로또번호생성기</a></li>
-                <li> <a href="https://funfunpuzzlegame.netlify.app/">퍼즐게임</a></li>
+                <li><a href="https://namelove.netlify.app/">이름궁합</a></li>
+                <li><a href="https://lottolotto.netlify.app/">꿈해몽.로또번호생성기</a></li>
+                <li><a href="https://funfunpuzzlegame.netlify.app/">퍼즐게임</a></li>
             </ul>
         </nav>
-        <hr>
+        <hr />
 
         <div class="container">
             <!-- <div>Teachable Machine Image Model</div>
@@ -158,27 +172,35 @@
                 </a>
             </section>
             <div class="kakao-">
-                <a href="https://bestmore.net/click.php?m=storebom&a=A100672119&l=0000"><img src="dogshop.png" alr="강아지용품" class="img-border"/></a>
-                <br>
-                <a href="https://lase.kr/click.php?m=linket&a=A100672124&l=9999&tu=https%3A%2F%2Fwww.linketshop.com%2Fshop%2Fshopdetail.html%3Fbranduid%3D38"><img src="ample.png" alr="ample" class="img-border"/></a>
-                <br>
-                <a href="https://newtip.net/click.php?m=linket&a=A100672124&l=9999&tu=https%3A%2F%2Fwww.linketshop.com%2Fshop%2Fshopdetail.html%3Fbranduid%3D10"><img src="snack.png" alr="snack" class="img-border"/></a>
-                <br>
-                <a href="https://lpweb.kr/click.php?m=menovel&a=A100672119&l=0000"><img src="webtoon.png" alr="webtoon" class="img-border"/></a>
-                
+                <a href="https://bestmore.net/click.php?m=storebom&a=A100672119&l=0000"
+                    ><img src="dogshop.png" alr="강아지용품" class="img-border"
+                /></a>
+                <br />
+                <a
+                    href="https://lase.kr/click.php?m=linket&a=A100672124&l=9999&tu=https%3A%2F%2Fwww.linketshop.com%2Fshop%2Fshopdetail.html%3Fbranduid%3D38"
+                    ><img src="ample.png" alr="ample" class="img-border"
+                /></a>
+                <br />
+                <a
+                    href="https://newtip.net/click.php?m=linket&a=A100672124&l=9999&tu=https%3A%2F%2Fwww.linketshop.com%2Fshop%2Fshopdetail.html%3Fbranduid%3D10"
+                    ><img src="snack.png" alr="snack" class="img-border"
+                /></a>
+                <br />
+                <a href="https://lpweb.kr/click.php?m=menovel&a=A100672119&l=0000"
+                    ><img src="webtoon.png" alr="webtoon" class="img-border"
+                /></a>
+
                 <p>
                     "이 포스팅은 제휴마케팅이 포함된 광고로 일정 커미션을 지급 받을 수 있습니다."
                 </p>
             </div>
-            
         </div>
-        
+
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
         <script type="text/javascript">
-        
             // More API functions here:
             // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
 
@@ -338,7 +360,7 @@
                     init().then(() => {
                         predict();
                         tt.style.display = 'none';
-                        
+
                         reloadBtn.style.display = 'block';
                         pageGo.style.display = 'block';
                         loading.style.display = 'none';
