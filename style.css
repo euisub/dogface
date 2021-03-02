@@ -327,6 +327,11 @@ justify-content: center;
   animation-direction: alternate;
 }
 
+.img-border{
+    border: 5px solid white;
+    border-radius: 5px;
+}
+
 
 @keyframes slidein {
   from {
